@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status, Depends
+from typing import List
 from typing_extensions import Annotated
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
@@ -21,6 +22,31 @@ def create_customer(customer_data: CustomerCreate, db: Annotated[Session, Depend
 
     except ValueError as error:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,detail=str(error))
+    
+    
+@router.get("/", response_model= List[CustomerResponse], status_code=status.HTTP_200_OK)
+def get_customer_id(db: Annotated[Session, Depends(get_session)]):
+    repository = CustomerRepository(db)
+    service = CustomerService(repository, db)
+
+    try:
+        return service.get_all_customers()
+
+    except ValueError as error:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(error))
+    
+    
+# @router.get("/{id}",response_model=CustomerResponse, status_code=status.HTTP_200_OK)
+# def get_customer_id(id: str, db: Annotated[Session, Depends(get_session)]):
+#     repository = CustomerRepository(db)
+#     service = CustomerService(repository, db)
+
+#     try:
+#         return service.get_customer(id)
+
+#     except ValueError as error:
+#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(error))
+        
         
 
 @router.delete("/{id}",status_code=status.HTTP_200_OK)

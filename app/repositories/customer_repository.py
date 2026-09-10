@@ -10,6 +10,12 @@ class CustomerRepository:
         stmt = select(Customer).where(Customer.id == customer_id)
 
         return self.db.execute(stmt).scalar_one_or_none()
+    
+    
+    def get_customers(self):
+            stmt = select(Customer)
+    
+            return self.db.execute(stmt).scalars().all()
         
         
     def create(self, customer):
@@ -19,3 +25,4 @@ class CustomerRepository:
     def delete(self, customer):
         self.db.delete(customer)
         return customer
+    
