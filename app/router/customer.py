@@ -36,16 +36,16 @@ def get_customer_id(db: Annotated[Session, Depends(get_session)]):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(error))
     
     
-# @router.get("/{id}",response_model=CustomerResponse, status_code=status.HTTP_200_OK)
-# def get_customer_id(id: str, db: Annotated[Session, Depends(get_session)]):
-#     repository = CustomerRepository(db)
-#     service = CustomerService(repository, db)
+@router.get("/{id}",response_model=CustomerResponse, status_code=status.HTTP_200_OK)
+def get_customer_id(id: str, db: Annotated[Session, Depends(get_session)]):
+    repository = CustomerRepository(db)
+    service = CustomerService(repository, db)
 
-#     try:
-#         return service.get_customer(id)
+    try:
+        return service.get_customer(id)
 
-#     except ValueError as error:
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(error))
+    except ValueError as error:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=str(error))
         
         
 

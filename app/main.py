@@ -7,7 +7,9 @@ import re
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="SmartInventory",
+    description="API para sistema de inventario",
+    version="1.0.0",)
 
 app.include_router(customer.router)
 

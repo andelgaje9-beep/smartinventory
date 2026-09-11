@@ -7,7 +7,7 @@ class CustomerRepository:
         self.db = db
 
     def get_customer_by_id(self, customer_id):
-        stmt = select(Customer).where(Customer.id == customer_id)
+        stmt = select(Customer).where(Customer.customer_id == customer_id)
 
         return self.db.execute(stmt).scalar_one_or_none()
     

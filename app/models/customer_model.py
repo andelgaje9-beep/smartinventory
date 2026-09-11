@@ -8,21 +8,21 @@ class Base(DeclarativeBase):
 class Customer(Base): 
     __tablename__ = "Customers"
 
-    id: Mapped[str] = mapped_column(String(20),primary_key=True)
-    fullname: Mapped [str] = mapped_column(String(50))
-    email: Mapped [str] = mapped_column(String(255), unique=True)
+    customer_id: Mapped[str] = mapped_column(String(20),primary_key=True)
+    customer_fullname: Mapped [str] = mapped_column(String(50))
+    customer_email: Mapped [str] = mapped_column(String(255), unique=True)
     
     def __repr__(self) -> str:
-        return f"Customer(id={self.id!r}, full_name={self.fullname!r}, email={self.email!r})"
+        return f"Customer(customer_id={self.customer_id!r}, customer_fullname={self.customer_fullname!r}, customer_email={self.customer_email!r})"
     
     __table_args__ = (
         CheckConstraint(
-        r"email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'",
+        r"customer_email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'",
         name="ck_customer_email_format"
         ),
         CheckConstraint(
-            "fullname ~ '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$'",
-            name="chk_fullname"
+            "customer_fullname ~ '^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$'",
+            name="chk_customer_fullname"
         ),
     )
     
